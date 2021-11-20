@@ -30,56 +30,59 @@ const breakpointColumnsObj = {
 
 export const SalesListView = () => {
   const [activeKey, setActiveKey] = useState(LiveAuctionViewState.All);
-  const { isLoading } = useMeta();
-  const { connected } = useWallet();
-  const { sales, hasResaleAuctions } = useSales(activeKey);
+  const {isLoading} = useMeta();
+  const {connected} = useWallet();
+  const {sales, hasResaleAuctions} = useSales(activeKey);
 
   return (
     <>
-      <Banner
+      {/* <Banner
         src="/main-banner.svg"
-        headingText="The amazing world of Metaplex."
-        subHeadingText="Buy exclusive Metaplex NFTs."
-        actionComponent={<HowToBuyModal buttonClassName="secondary-btn" />}
+        headingText="Welcome to Akkoro's NFTs"
+        subHeadingText="Community-Built Marketplace"
+        actionComponent={}
         useBannerBg
-      />
+      /> */}
       <Layout>
-        <Content style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <Col style={{ width: '100%', marginTop: 32 }}>
+        <Content style={{display: 'flex', flexWrap: 'wrap'}}>
+          <Col style={{width: '100%'}}>
+            <Row></Row>
+          </Col>
+          <Col style={{width: '100%'}}>
+            <div style={{margin: '1rem 0'}}>
+              <h3>Experimental Build</h3>
+              This is a community-built marketplace for NFTs.
+              <HowToBuyModal buttonClassName='secondary-btn' />
+            </div>
             <Row>
               <Tabs
                 activeKey={activeKey}
-                onTabClick={key => setActiveKey(key as LiveAuctionViewState)}
-              >
+                onTabClick={(key) => setActiveKey(key as LiveAuctionViewState)}>
                 <TabPane
                   tab={
                     <>
-                      <span className="live"></span> Live
+                      <span className='live'></span> Live
                     </>
                   }
-                  key={LiveAuctionViewState.All}
-                ></TabPane>
+                  key={LiveAuctionViewState.All}></TabPane>
                 {hasResaleAuctions && (
                   <TabPane
-                    tab="Secondary Marketplace"
-                    key={LiveAuctionViewState.Resale}
-                  ></TabPane>
+                    tab='Secondary Marketplace'
+                    key={LiveAuctionViewState.Resale}></TabPane>
                 )}
-                <TabPane tab="Ended" key={LiveAuctionViewState.Ended}></TabPane>
+                <TabPane tab='Ended' key={LiveAuctionViewState.Ended}></TabPane>
                 {connected && (
                   <TabPane
-                    tab="Participated"
-                    key={LiveAuctionViewState.Participated}
-                  ></TabPane>
+                    tab='Participated'
+                    key={LiveAuctionViewState.Participated}></TabPane>
                 )}
               </Tabs>
             </Row>
             <Row>
               <Masonry
                 breakpointCols={breakpointColumnsObj}
-                className="masonry-grid"
-                columnClassName="masonry-grid_column"
-              >
+                className='masonry-grid'
+                columnClassName='masonry-grid_column'>
                 {isLoading &&
                   [...Array(10)].map((_, idx) => <CardLoader key={idx} />)}
                 {!isLoading &&
